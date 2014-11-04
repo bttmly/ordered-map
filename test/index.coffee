@@ -6,6 +6,15 @@ describe "OrderedMap()", ->
   it "is a function", ->
     assert.equal typeof OrderedMap, "function"
 
+  it "can could be called with `new` I guess", ->
+    ordered_map = new OrderedMap()
+    assert.equal ordered_map instanceof OrderedMap, false
+
+  it "can be called without `new`, and without global side effects, because duh", ->
+    num_globals = Object.keys(global).length
+    ordered_map = OrderedMap()
+    assert.equal num_globals, Object.keys(global).length
+
 describe "Methods", ->
   instance = undefined
   beforeEach ->
