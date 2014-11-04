@@ -101,6 +101,9 @@ OrderedMap = ->
     tail: -> tail
     size: -> size
     head: -> head
+    clear: ->
+      storage = Object.create null
+      undefined
 
   return instance
 

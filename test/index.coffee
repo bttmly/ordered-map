@@ -6,11 +6,11 @@ describe "OrderedMap()", ->
   it "is a function", ->
     assert.equal typeof OrderedMap, "function"
 
-  it "can could be called with `new` I guess", ->
+  it "can could be called with `new` I guess, but don't expect `instanceof` coherence", ->
     ordered_map = new OrderedMap()
     assert.equal ordered_map instanceof OrderedMap, false
 
-  it "can be called without `new`, and without global side effects, because duh", ->
+  it "can be called without `new`, and without exposing globals, because JS", ->
     num_globals = Object.keys(global).length
     ordered_map = OrderedMap()
     assert.equal num_globals, Object.keys(global).length
@@ -176,3 +176,7 @@ describe "Methods", ->
   describe "#tail", ->
     it "is a function", ->
       assert.equal typeof instance.tail, "function"
+
+  describe "#clear", ->
+    it "is a function", ->
+      assert.equal typeof instance.clear, "function"
