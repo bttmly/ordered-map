@@ -1,0 +1,21 @@
+{
+  "name": "ordered-map",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script/register test/index.coffee -R spec"
+  },
+  "keywords": [
+    "linked",
+    "list",
+    "map",
+    "ordered",
+    "map"
+  ],
+  "author": "Nick Bottomley",
+  "license": "MIT",
+  "devDependencies": {
+    "coffee-script": "^1.8.0"
+  }
+}
