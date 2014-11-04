@@ -6,21 +6,23 @@ OrderedMap = ->
   tail = null
   size = 0
 
+  internal_at = (key) -> storage[key]
+
   instance =
 
     push: (key, value) ->
-      prev_tail = tail
+      prior_tail = tail
       item =
-        prev: prev_tail
-        next: null
-        value: value
         key: key
+        value: value
+        prev: prior_tail
+        next: null
 
       tail = 
       storage[key] =
         item
 
-      prev_tail?.next = item
+      prior_tail?.next = item
 
       storage[key] = item
       head = item unless head?
@@ -28,44 +30,45 @@ OrderedMap = ->
 
     pop: ->
       return null unless tail
-      prev_tail = tail
-      tail = prev_tail.prev
-      tail.next = null
+      prior_tail = tail
+      tail = prior_tail.prev
+      tail?.next = null
       size -= 1
-      return prev_tail.value
+      return prior_tail.value
 
     unshift: (key, value) ->
-      prev_head = head
+      prior_head = head
 
       item = 
+        key: key
         value: value
         prev: null
-        next: prev_head
-        key: key
+        next: prior_head
 
       head = 
-      prev_head.prev = 
       storage[key] =
         item
+
+      prior_head?.prev = item
 
       tail = item unless tail
       return size += 1
 
     shift: ->
       return null unless head
-      prev_head = head
-      head = prev_head.next
-      head.prev = null
+      prior_head = head
+      head = prior_head.next
+      head?.prev = null
       size -= 1
-      return prev_head.value
+      return prior_head.value
 
 
     get: (key) ->
-      ret = storage[key]
+      ret = storage[key]?.value
       return if ret? then ret else null
 
     remove: (key) ->
-      item = instance.get key
+      item = internal_at key
       return null unless item?
 
       if item is head
@@ -74,8 +77,10 @@ OrderedMap = ->
       if item is tail
         return instance.pop()
 
-      item.prev.next = item.next
-      item.next.prev = item.prev
+      item.prev?.next = item.next
+      item.next?.prev = item.prev
+      size -= 1
+
       return item.value
 
     keys: ->
