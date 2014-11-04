@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register test/index.coffee -R spec"
+    "test": "mocha --compilers coffee:coffee-script/register test/index.coffee -R spec",
+    "build": "coffee -cb -o ./lib ./src"
   },
   "keywords": [
     "linked",
