@@ -11,9 +11,9 @@ OrderedMap = ->
       instance.remove(key) if instance.has key
 
       prior_tail = tail
-      
+
       item =
-      tail = 
+      tail =
       storage[key] =
         key: key
         value: value
@@ -34,17 +34,17 @@ OrderedMap = ->
 
     unshift: (key, value) ->
       instance.remove(key) if instance.has key
-        
+
       prior_head = head
 
-      item = 
+      item =
       head =
       storage[key] =
         key: key
         value: value
         prev: null
         next: prior_head
-      
+
       prior_head?.prev = item
       tail = item unless tail
       return size += 1
@@ -92,7 +92,7 @@ OrderedMap = ->
         item = item.next
       ret
 
-    forEach: (cb) -> 
+    forEach: (cb) ->
       item = head
       while item?
         cb item.key, item.value
@@ -104,8 +104,16 @@ OrderedMap = ->
     size: -> size
 
     tail: -> tail
-    
+
     head: -> head
+
+    at: (pos) ->
+      i = 0
+      item = head
+      while i < pos
+        i += 1
+        item = item.next
+      item.value
 
     clear: ->
       head = null
