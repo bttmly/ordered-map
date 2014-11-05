@@ -8,7 +8,7 @@ OrderedMap = ->
   instance =
 
     push: (key, value) ->
-      instance.remove(key) if instance.get(key)?
+      instance.remove(key) if instance.has key
 
       prior_tail = tail
       
@@ -33,7 +33,7 @@ OrderedMap = ->
       return prior_tail.value
 
     unshift: (key, value) ->
-      instance.remove(key) if instance.get(key)?
+      instance.remove(key) if instance.has key
         
       prior_head = head
 
