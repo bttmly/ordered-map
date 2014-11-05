@@ -160,14 +160,43 @@ describe "Methods", ->
     it "is a function", ->
       assert.equal typeof instance.keys, "function"
 
+    it "returns an array of keys in insertion order", ->
+      instance.push 'a', 1
+      instance.push 'z', 2
+      instance.push 'p', 3
+      assert.deepEqual instance.keys(), ['a', 'z', 'p']
+      instance.pop()
+      assert.deepEqual instance.keys(), ['a', 'z']
+      instance.shift()
+      assert.deepEqual instance.keys(), ['z']
 
   describe "#forEach", ->
     it "is a function", ->
       assert.equal typeof instance.forEach, "function"
 
+    it "iterates over the map", ->
+      instance.push 'a', 1
+      instance.push 'b', 2
+      instance.push 'c', 3
+      instance.push 'd', 4
+      results = []
+      instance.forEach [].push.bind(results)
+      assert.deepEqual results, ['a', 1, 'b', 2, 'c', 3, 'd', 4]
+
   describe "#size", ->
     it "is a function", ->
       assert.equal typeof instance.size, "function"
+
+    it "returns the number of items in the map", ->
+      assert.equal instance.size(), 0
+      instance.push 'a', 'b'
+      assert.equal instance.size(), 1
+      instance.push 'c', 'd'
+      assert.equal instance.size(), 2
+      instance.pop()
+      assert.equal instance.size(), 1
+      instance.pop()
+      assert.equal instance.size(), 0
 
   describe "#head", ->
     it "is a function", ->
@@ -180,3 +209,17 @@ describe "Methods", ->
   describe "#clear", ->
     it "is a function", ->
       assert.equal typeof instance.clear, "function"
+
+    it "clears the map", ->
+      instance.push 'a', 1
+      instance.push 'b', 2
+      instance.push 'c', 3
+      assert.equal instance.size(), 3
+      assert.equal instance.head().value, 1
+      assert.equal instance.tail().value, 3
+      instance.clear()
+      assert.equal instance.size(), 0
+      assert.equal instance.head(), null
+      assert.equal instance.tail(), null
+      assert.equal instance.keys().length, 0
+

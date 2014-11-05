@@ -1,30 +1,26 @@
 OrderedMap = ->
 
   storage = Object.create null
-  
   head = null
   tail = null
   size = 0
 
-  internal_at = (key) -> storage[key]
-
   instance =
 
     push: (key, value) ->
+      instance.remove(key) if instance.get(key)?
+
       prior_tail = tail
+      
       item =
+      tail = 
+      storage[key] =
         key: key
         value: value
         prev: prior_tail
         next: null
 
-      tail = 
-      storage[key] =
-        item
-
       prior_tail?.next = item
-
-      storage[key] = item
       head = item unless head?
       return size += 1
 
@@ -37,20 +33,19 @@ OrderedMap = ->
       return prior_tail.value
 
     unshift: (key, value) ->
+      instance.remove(key) if instance.get(key)?
+        
       prior_head = head
 
       item = 
+      head =
+      storage[key] =
         key: key
         value: value
         prev: null
         next: prior_head
-
-      head = 
-      storage[key] =
-        item
-
+      
       prior_head?.prev = item
-
       tail = item unless tail
       return size += 1
 
@@ -62,13 +57,19 @@ OrderedMap = ->
       size -= 1
       return prior_head.value
 
-
     get: (key) ->
       ret = storage[key]?.value
       return if ret? then ret else null
 
+    update: (key, value) ->
+      item = storage[key]
+      if item?
+        item.value = value
+        return true
+      return null
+
     remove: (key) ->
-      item = internal_at key
+      item = storage[key]
       return null unless item?
 
       if item is head
@@ -98,11 +99,19 @@ OrderedMap = ->
         item = item.next
       undefined
 
-    tail: -> tail
+    has: (key) -> instance.get(key)?
+
     size: -> size
+
+    tail: -> tail
+    
     head: -> head
+
     clear: ->
+      head = null
+      tail = null
       storage = Object.create null
+      size = 0
       undefined
 
   return instance
