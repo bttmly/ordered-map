@@ -99,7 +99,8 @@ OrderedMap = ->
         item = item.next
       return undefined
 
-    has: (key) -> return instance.get(key)?
+    has: (key) ->
+      Object::hasOwnProperty.call storage, key
 
     size: -> return size
 
