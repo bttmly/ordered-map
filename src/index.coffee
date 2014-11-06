@@ -85,27 +85,27 @@ OrderedMap = ->
       return item.value
 
     keys: ->
-      ret = []
+      keys = []
       item = head
       while item?
-        ret.push item.key
+        keys.push item.key
         item = item.next
-      ret
+      return keys
 
     forEach: (cb) ->
       item = head
       while item?
         cb item.key, item.value
         item = item.next
-      undefined
+      return undefined
 
-    has: (key) -> instance.get(key)?
+    has: (key) -> return instance.get(key)?
 
-    size: -> size
+    size: -> return size
 
-    tail: -> tail
-
-    head: -> head
+    tail: -> return tail
+    
+    head: -> return head
 
     at: (pos) ->
       i = 0
@@ -120,7 +120,7 @@ OrderedMap = ->
       tail = null
       storage = Object.create null
       size = 0
-      undefined
+      return undefined
 
   return instance
 
