@@ -114,7 +114,7 @@ OrderedMap = ->
       while i < pos
         i += 1
         item = item.next
-      item.value
+      item?.value or undefined
 
     clear: ->
       head = null

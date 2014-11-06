@@ -237,3 +237,9 @@ describe "Methods", ->
 
       assert.equal instance.at(0), 2
       assert.equal instance.at(1), 3
+
+    it "returns undefined for an out of range index", ->
+      assert.equal instance.at(0), undefined
+      instance.push 'a', 1
+      assert.equal instance.at(0), 1
+      assert.equal instance.at(1), undefined
