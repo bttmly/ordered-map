@@ -7,16 +7,17 @@ describe "OrderedMap()", ->
     assert.equal typeof OrderedMap, "function"
 
   it "can could be called with `new` I guess, but don't expect `instanceof` coherence", ->
-    ordered_map = new OrderedMap()
-    assert.equal ordered_map instanceof OrderedMap, false
+    instance = new OrderedMap()
+    assert.equal instance instanceof OrderedMap, false
 
   it "can be called without `new`, and without exposing globals, because JS", ->
     num_globals = Object.keys(global).length
-    ordered_map = OrderedMap()
+    instance = OrderedMap()
     assert.equal num_globals, Object.keys(global).length
 
 describe "Methods", ->
   instance = undefined
+  
   beforeEach ->
     instance = OrderedMap()
 
@@ -25,23 +26,23 @@ describe "Methods", ->
       assert.equal typeof instance.push, "function"
 
     it "adds a key-value pair to the tail", ->
-      instance.push "ABC", "DEF"
+      instance.push 'abc', 'def'
       assert.equal instance.size(), 1
-      assert.equal instance.tail().key, "ABC"
-      assert.equal instance.tail().value, "DEF"
-      instance.push "GHI", "JKL"
+      assert.equal instance.tail().key, 'abc'
+      assert.equal instance.tail().value, 'def'
+      instance.push 'ghi', 'jkl'
       assert.equal instance.size(), 2
-      assert.equal instance.tail().key, "GHI"
-      assert.equal instance.tail().value, "JKL"
+      assert.equal instance.tail().key, 'ghi'
+      assert.equal instance.tail().value, 'jkl'
 
     it "wires up .next properly", ->
-      instance.push "ABC", "DEF"
+      instance.push 'abc', 'def'
       prior_tail = instance.tail()
-      instance.push "GHI", "JKL"
+      instance.push 'ghi', 'jkl'
       assert.equal instance.tail().prev, prior_tail
       
     it "adds the pair at the head if no head existed previously", ->
-      instance.push "ABC", "DEF"
+      instance.push 'abc', 'def'
       assert.equal instance.head(), instance.tail()
 
   describe "#pop", ->
