@@ -223,3 +223,17 @@ describe "Methods", ->
       assert.equal instance.tail(), null
       assert.equal instance.keys().length, 0
 
+  describe "#at", ->
+    it "returns the value for a given index", ->
+      instance.push 'a', 1
+      instance.push 'b', 2
+      instance.push 'c', 3
+
+      assert.equal instance.at(0), 1
+      assert.equal instance.at(1), 2
+      assert.equal instance.at(2), 3
+
+      do instance.shift
+
+      assert.equal instance.at(0), 2
+      assert.equal instance.at(1), 3

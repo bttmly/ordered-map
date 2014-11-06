@@ -32,5 +32,6 @@ Returns an array containing the map's keys.
 Returns a boolean indicating whether or not `key` is in the map. Uses `Object.prototype.hasOwnProperty()`, so it'll work fine when keys have values like `null` and `undefined`.
 
 ### `at(Number index) => Object value`
+Returns the value 
 
 ### `clear() => undefined`
