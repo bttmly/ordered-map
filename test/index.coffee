@@ -17,7 +17,7 @@ describe "OrderedMap()", ->
 
 describe "Methods", ->
   instance = undefined
-  
+
   beforeEach ->
     instance = OrderedMap()
 
@@ -28,22 +28,20 @@ describe "Methods", ->
     it "adds a key-value pair to the tail", ->
       instance.push 'abc', 'def'
       assert.equal instance.size(), 1
-      assert.equal instance.tail().key, 'abc'
-      assert.equal instance.tail().value, 'def'
+      assert.equal instance.last(), 'def'
       instance.push 'ghi', 'jkl'
       assert.equal instance.size(), 2
-      assert.equal instance.tail().key, 'ghi'
-      assert.equal instance.tail().value, 'jkl'
+      assert.equal instance.last(), 'jkl'
 
-    it "wires up .next properly", ->
-      instance.push 'abc', 'def'
-      prior_tail = instance.tail()
-      instance.push 'ghi', 'jkl'
-      assert.equal instance.tail().prev, prior_tail
+    # it "wires up .next properly", ->
+    #   instance.push 'abc', 'def'
+    #   prior_last = instance.last()
+    #   instance.push 'ghi', 'jkl'
+    #   assert.equal instance.tail().prev, prior_tail
       
     it "adds the pair at the head if no head existed previously", ->
       instance.push 'abc', 'def'
-      assert.equal instance.head(), instance.tail()
+      assert.equal instance.first(), instance.last()
 
   describe "#pop", ->
     it "is a function", ->
@@ -54,15 +52,13 @@ describe "Methods", ->
       instance.push 'ghi', 'jkl'
 
       assert.equal instance.size(), 2
-      assert.equal instance.head().key, 'abc'
-      assert.equal instance.head().value, 'def'
+      assert.equal instance.last(), 'jkl'
 
       popped = instance.pop()
 
       assert.equal popped, 'jkl'
       assert.equal instance.size(), 1
-      assert.equal instance.head().key, 'abc'
-      assert.equal instance.head().value, 'def'
+      assert.equal instance.first(), 'def'
 
       popped = instance.pop()
 
@@ -78,15 +74,13 @@ describe "Methods", ->
       instance.push 'ghi', 'jkl'
 
       assert.equal instance.size(), 2
-      assert.equal instance.head().key, 'abc'
-      assert.equal instance.head().value, 'def'
+      assert.equal instance.first(), 'def'
 
       shifted = instance.shift()
 
       assert.equal shifted, 'def'
       assert.equal instance.size(), 1
-      assert.equal instance.head().key, 'ghi'
-      assert.equal instance.head().value, 'jkl'
+      assert.equal instance.first(), 'jkl'
 
       shifted = instance.shift()
 
@@ -100,22 +94,20 @@ describe "Methods", ->
     it "adds a key-value pair as the head", ->
       instance.unshift 'abc', 'def'
       assert.equal instance.size(), 1
-      assert.equal instance.head().key, 'abc'
-      assert.equal instance.head().value, 'def'
+      assert.equal instance.first(), 'def'
       instance.unshift 'ghi', 'jkl'
       assert.equal instance.size(), 2
-      assert.equal instance.head().key, 'ghi'
-      assert.equal instance.head().value, 'jkl'
+      assert.equal instance.first(), 'jkl'
   
-    it 'wires up .next properly', ->
-      instance.unshift 'abc', 'def'
-      prior_head = instance.head()
-      instance.unshift 'ghi', 'jkl'
-      assert.equal instance.head().next, prior_head
+    # it 'wires up .next properly', ->
+    #   instance.unshift 'abc', 'def'
+    #   prior_head = instance.head()
+    #   instance.unshift 'ghi', 'jkl'
+    #   assert.equal instance.head().next, prior_head
 
     it 'adds the pair as the tail if no tail existed previously', ->
       instance.unshift 'abc', 'def'
-      assert.equal instance.head(), instance.tail()
+      assert.equal instance.first(), instance.last()
 
 
   describe "#get", ->
@@ -139,23 +131,18 @@ describe "Methods", ->
       assert.equal instance.size(), 3
 
       value = instance.remove 'c'
-      assert.equal instance.size(), 2
       assert.equal value, 'd'
+      assert.equal instance.size(), 2
 
-      head = instance.head()
-      tail = instance.tail()
-
-      assert.equal head.next.value, tail.value
-      assert.equal tail.prev.value, head.value
+      assert.equal instance.at(0), 'b'
+      assert.equal instance.at(1), 'f'
 
       value = instance.remove 'a'
       assert.equal value, 'b'
       assert.equal instance.size(), 1
 
-      tail = instance.tail()
-      head = instance.head()
-
-      assert.equal head, tail
+      # tail = instance.tail()
+      # head = instance.head()
 
   describe "#keys", ->
     it "is a function", ->
@@ -199,13 +186,13 @@ describe "Methods", ->
       instance.pop()
       assert.equal instance.size(), 0
 
-  describe "#head", ->
+  describe "#first", ->
     it "is a function", ->
-      assert.equal typeof instance.head, "function"
+      assert.equal typeof instance.first, "function"
 
-  describe "#tail", ->
+  describe "#last", ->
     it "is a function", ->
-      assert.equal typeof instance.tail, "function"
+      assert.equal typeof instance.last, "function"
 
   describe "#clear", ->
     it "is a function", ->
@@ -216,12 +203,11 @@ describe "Methods", ->
       instance.push 'b', 2
       instance.push 'c', 3
       assert.equal instance.size(), 3
-      assert.equal instance.head().value, 1
-      assert.equal instance.tail().value, 3
+      assert.equal instance.first(), 1
+      
       instance.clear()
+
       assert.equal instance.size(), 0
-      assert.equal instance.head(), null
-      assert.equal instance.tail(), null
       assert.equal instance.keys().length, 0
 
   describe "#at", ->

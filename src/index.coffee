@@ -104,9 +104,9 @@ OrderedMap = ->
 
     size: -> return size
 
-    tail: -> return tail
+    last: -> return tail.value
     
-    head: -> return head
+    first: -> return head.value
 
     at: (pos) ->
       i = 0
