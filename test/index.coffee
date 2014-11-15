@@ -120,6 +120,22 @@ describe "Methods", ->
       instance.push 'e', 'f'
       assert.equal instance.get('c'), 'd'
 
+  describe "#update", ->
+    it "updates the value of an existing key", ->
+      instance.push 'a', 1
+      assert.equal instance.get('a'), 1
+      result = instance.update 'a', 2
+      assert.equal instance.get('a'), 2
+      assert.equal result, true
+
+    it "returns null and is a no-op if key isn't present", ->
+      instance.push 'a', 1
+      assert.equal instance.keys().length, 1
+      result = instance.update 'b', 2
+      assert.deepEqual instance.keys(), ['a']
+      assert.equal instance.get('a'), 1
+      assert.equal result, null
+
   describe "#remove", ->
     it "is a function", ->
       assert.equal typeof instance.remove, "function"
@@ -140,9 +156,6 @@ describe "Methods", ->
       value = instance.remove 'a'
       assert.equal value, 'b'
       assert.equal instance.size(), 1
-
-      # tail = instance.tail()
-      # head = instance.head()
 
   describe "#keys", ->
     it "is a function", ->
@@ -170,6 +183,21 @@ describe "Methods", ->
       results = []
       instance.forEach [].push.bind(results)
       assert.deepEqual results, ['a', 1, 'b', 2, 'c', 3, 'd', 4]
+  
+  describe "#has", ->
+    it "returns whether or not key is in the map", ->
+      instance.push 'a', 1
+      instance.push 'b', 2
+      instance.push 'c', 3
+
+      assert.equal instance.has('c'), true
+      assert.equal instance.has('b'), true
+      assert.equal instance.has('a'), true
+      assert.equal instance.has('0'), false
+
+    it "doesn't have crap like `constructor` or other inherited properties", ->
+      assert.equal instance.has('constructor'), false
+      assert.equal instance.has('hasOwnProperty'), false
 
   describe "#size", ->
     it "is a function", ->
@@ -194,22 +222,6 @@ describe "Methods", ->
     it "is a function", ->
       assert.equal typeof instance.last, "function"
 
-  describe "#clear", ->
-    it "is a function", ->
-      assert.equal typeof instance.clear, "function"
-
-    it "clears the map", ->
-      instance.push 'a', 1
-      instance.push 'b', 2
-      instance.push 'c', 3
-      assert.equal instance.size(), 3
-      assert.equal instance.first(), 1
-      
-      instance.clear()
-
-      assert.equal instance.size(), 0
-      assert.equal instance.keys().length, 0
-
   describe "#at", ->
     it "returns the value for a given index", ->
       instance.push 'a', 1
@@ -230,3 +242,19 @@ describe "Methods", ->
       instance.push 'a', 1
       assert.equal instance.at(0), 1
       assert.equal instance.at(1), undefined
+
+  describe "#clear", ->
+    it "is a function", ->
+      assert.equal typeof instance.clear, "function"
+
+    it "clears the map", ->
+      instance.push 'a', 1
+      instance.push 'b', 2
+      instance.push 'c', 3
+      assert.equal instance.size(), 3
+      assert.equal instance.first(), 1
+      
+      instance.clear()
+
+      assert.equal instance.size(), 0
+      assert.equal instance.keys().length, 0

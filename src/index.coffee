@@ -61,6 +61,11 @@ OrderedMap = ->
       ret = storage[key]?.value
       return if ret? then ret else null
 
+    insert: (key, value) ->
+      item = storage[key]
+      return null if item?
+      return instance.set key, value
+
     update: (key, value) ->
       item = storage[key]
       if item?
@@ -99,8 +104,7 @@ OrderedMap = ->
         item = item.next
       return undefined
 
-    has: (key) ->
-      Object::hasOwnProperty.call storage, key
+    has: (key) -> key of storage
 
     size: -> return size
 
