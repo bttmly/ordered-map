@@ -120,6 +120,9 @@ describe "Methods", ->
       instance.push 'e', 'f'
       assert.equal instance.get('c'), 'd'
 
+  describe "#insert", ->
+    
+
   describe "#update", ->
     it "updates the value of an existing key", ->
       instance.push 'a', 1
