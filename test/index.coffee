@@ -38,7 +38,7 @@ describe "Methods", ->
     #   prior_last = instance.last()
     #   instance.push 'ghi', 'jkl'
     #   assert.equal instance.tail().prev, prior_tail
-      
+
     it "adds the pair at the head if no head existed previously", ->
       instance.push 'abc', 'def'
       assert.equal instance.first(), instance.last()
@@ -98,7 +98,7 @@ describe "Methods", ->
       instance.unshift 'ghi', 'jkl'
       assert.equal instance.size(), 2
       assert.equal instance.first(), 'jkl'
-  
+
     # it 'wires up .next properly', ->
     #   instance.unshift 'abc', 'def'
     #   prior_head = instance.head()
@@ -121,7 +121,7 @@ describe "Methods", ->
       assert.equal instance.get('c'), 'd'
 
   describe "#insert", ->
-    
+
 
   describe "#update", ->
     it "updates the value of an existing key", ->
@@ -186,7 +186,7 @@ describe "Methods", ->
       results = []
       instance.forEach [].push.bind(results)
       assert.deepEqual results, ['a', 1, 'b', 2, 'c', 3, 'd', 4]
-  
+
   describe "#has", ->
     it "returns whether or not key is in the map", ->
       instance.push 'a', 1
@@ -203,9 +203,6 @@ describe "Methods", ->
       assert.equal instance.has('hasOwnProperty'), false
 
   describe "#size", ->
-    it "is a function", ->
-      assert.equal typeof instance.size, "function"
-
     it "returns the number of items in the map", ->
       assert.equal instance.size(), 0
       instance.push 'a', 'b'
@@ -218,12 +215,22 @@ describe "Methods", ->
       assert.equal instance.size(), 0
 
   describe "#first", ->
-    it "is a function", ->
-      assert.equal typeof instance.first, "function"
+    it "returns the first item in the map", ->
+      instance.push('a', 'b')
+      assert.equal instance.first(), 'b'
+      instance.push('c', 'd')
+      assert.equal instance.first(), 'b'
+      instance.shift()
+      assert.equal instance.first(), 'd'
 
   describe "#last", ->
-    it "is a function", ->
-      assert.equal typeof instance.last, "function"
+    it "retursn the last item in the map", ->
+      instance.push('a', 'b')
+      assert.equal instance.last(), 'b'
+      instance.push('c', 'd')
+      assert.equal instance.last(), 'd'
+      instance.pop()
+      assert.equal instance.last(), 'b'
 
   describe "#at", ->
     it "returns the value for a given index", ->
@@ -256,7 +263,7 @@ describe "Methods", ->
       instance.push 'c', 3
       assert.equal instance.size(), 3
       assert.equal instance.first(), 1
-      
+
       instance.clear()
 
       assert.equal instance.size(), 0
