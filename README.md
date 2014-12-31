@@ -15,7 +15,7 @@ Add `value` indexed by `key` to the map in the first position. If `key` is alrea
 Removes the first mapping, and returns the `value`. If map is empty, returns `null`.
 
 ### `get(key) => value`
-Returns the `value` for `key`, or `undefined`.
+Returns the `value` for `key`, or `undefined`. Key access is O(1).
 
 ### `update(key, value) => `
 Changes the value associated with `key` without changing the order.
@@ -33,7 +33,7 @@ Calls `cb(key, value)` for each key-value pair in the map.
 Returns a boolean indicating whether or not `key` is in the map. Uses `Object.prototype.hasOwnProperty()`, so it'll work fine when keys have values like `null` and `undefined`.
 
 ### `at(Number index) => value`
-Returns the value for the key at position `index` (zero-indexed, naturally).
+Returns the value for the key at position `index` (zero-indexed, naturally). Random access is O(n) due to linked list traversal.
 
 ### `clear() => undefined`
 Removes all keys and values from the map.
