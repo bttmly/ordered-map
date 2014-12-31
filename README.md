@@ -30,7 +30,7 @@ Returns an array containing the map's keys.
 Calls `cb(key, value)` for each key-value pair in the map.
 
 ### `has(key) => Boolean hasKey`
-Returns a boolean indicating whether or not `key` is in the map. Uses `Object.prototype.hasOwnProperty()`, so it'll work fine when keys have values like `null` and `undefined`.
+Returns a boolean indicating whether or not `key` is in the map. Uses the [`in` operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in) under the hood.
 
 ### `at(Number index) => value`
 Returns the value for the key at position `index` (zero-indexed, naturally). Random access is O(n) due to linked list traversal.
