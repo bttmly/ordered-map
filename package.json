@@ -1,6 +1,6 @@
 {
   "name": "ordered-map",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "repository": "git@github.com:nickb1080/ordered-map.git",
