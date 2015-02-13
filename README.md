@@ -1,4 +1,4 @@
-# Ordered Map
+# Ordered Map [![Build Status](https://travis-ci.org/nickb1080/ordered-map.svg?branch=master)](https://travis-ci.org/nickb1080/ordered-map)
 
 ## Methods
 

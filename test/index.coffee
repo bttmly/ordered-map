@@ -124,14 +124,14 @@ describe "Methods", ->
 
 
   describe "#update", ->
-    it "updates the value of an existing key", ->
+    it "updates the value of an existing key if present and returns true", ->
       instance.push 'a', 1
       assert.equal instance.get('a'), 1
       result = instance.update 'a', 2
       assert.equal instance.get('a'), 2
       assert.equal result, true
 
-    it "returns null and is a no-op if key isn't present", ->
+    it "returns returns null and is a no-op if key isn't present", ->
       instance.push 'a', 1
       assert.equal instance.keys().length, 1
       result = instance.update 'b', 2
